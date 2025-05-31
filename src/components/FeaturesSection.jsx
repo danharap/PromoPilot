@@ -1,5 +1,6 @@
 import React from 'react';
 import { Zap, TrendingUp, Users, Globe, Shield, Star } from 'lucide-react';
+import AnimatedSection from './AnimatedSection';
 
 const FeaturesSection = () => {
   const features = [
@@ -45,14 +46,18 @@ const FeaturesSection = () => {
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             From content creation to performance tracking, we've got all the tools you need in one powerful platform.
           </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        </div>        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div key={index} className="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow">
+            <AnimatedSection
+              key={index}
+              animationType="fadeInUp"
+              delay={index * 100}
+              className="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow"
+            >
               <div className="mb-4">{feature.icon}</div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
               <p className="text-gray-600">{feature.description}</p>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </div>

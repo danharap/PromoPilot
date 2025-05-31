@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import Logo from './Logo';
 
-const LandingNavbar = ({ onLogin, onSignUp }) => {
+const LandingNavbar = ({ onLogin, onSignUp, onNavigateToHelp, onNavigateToBlog, onNavigateToCommunity, onBackToLanding }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [featuresOpen, setFeaturesOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
 
   return (
     <nav className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">        <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Logo />
+          <button onClick={onBackToLanding} className="flex items-center">
+            <Logo />
+          </button>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
@@ -46,12 +47,36 @@ const LandingNavbar = ({ onLogin, onSignUp }) => {
                   className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium flex items-center transition-colors"
                 >
                   Resources <ChevronDown className="ml-1 h-4 w-4" />
-                </button>
-                {resourcesOpen && (
+                </button>                {resourcesOpen && (
                   <div className="absolute top-full left-0 mt-1 w-40 bg-white rounded-md shadow-lg border border-gray-200">
-                    <div className="py-1">                      <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">Help Center</button>
-                      <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">Blog</button>
-                      <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">Community</button>
+                    <div className="py-1">
+                      <button 
+                        onClick={() => {
+                          onNavigateToHelp();
+                          setResourcesOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      >
+                        Help Center
+                      </button>
+                      <button 
+                        onClick={() => {
+                          onNavigateToBlog();
+                          setResourcesOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      >
+                        Blog
+                      </button>
+                      <button 
+                        onClick={() => {
+                          onNavigateToCommunity();
+                          setResourcesOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      >
+                        Community
+                      </button>
                     </div>
                   </div>
                 )}

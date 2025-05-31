@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Check } from 'lucide-react';
+import AnimatedSection from './AnimatedSection';
 
 const PricingSection = () => {
   const [isAnnual, setIsAnnual] = useState(true);
@@ -49,10 +50,14 @@ const PricingSection = () => {
             <span className={`ml-3 ${isAnnual ? 'text-gray-900' : 'text-gray-500'}`}>Annual</span>
             {isAnnual && <span className="ml-2 text-sm text-green-600 font-medium">Save 25%</span>}
           </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        </div>        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {plans.map((plan, index) => (
-            <div key={index} className={`relative bg-white rounded-xl shadow-sm border-2 ${plan.popular ? 'border-blue-600' : 'border-gray-200'} p-8`}>
+            <AnimatedSection
+              key={index}
+              animationType="fadeInUp"
+              delay={index * 150}
+              className={`relative bg-white rounded-xl shadow-sm border-2 ${plan.popular ? 'border-blue-600' : 'border-gray-200'} p-8`}
+            >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <span className="bg-blue-600 text-white px-4 py-1 text-sm font-medium rounded-full">Most Popular</span>
@@ -78,7 +83,7 @@ const PricingSection = () => {
               <button className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${plan.popular ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-900'}`}>
                 Get Started
               </button>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </div>
