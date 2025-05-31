@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Zap } from 'lucide-react';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Card from '../components/Card';
+import Logo from '../components/Logo';
 
 const SignIn = ({ onSignIn }) => {
   const [email, setEmail] = useState('');
@@ -34,10 +34,9 @@ const SignIn = ({ onSignIn }) => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <Card className="w-full max-w-md p-8">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-600 rounded-xl mb-4">
-            <Zap className="w-6 h-6 text-white" />
+          <div className="flex justify-center mb-4">
+            <Logo size="large" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">PromoPilot</h1>
           <p className="text-gray-600 mt-2">Welcome back! Sign in to your account</p>
         </div>
         

@@ -30,8 +30,13 @@ A React-based front-end application that helps small businesses automate their s
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd promopilot
+   git clone https://github.com/danharap/PromoPilot.git
+   cd PromoPilot
+   ```
+
+2. Switch to the develop branch for latest features:
+   ```bash
+   git checkout develop
    ```
 
 2. Install dependencies:
@@ -52,6 +57,34 @@ A React-based front-end application that helps small businesses automate their s
 - `npm build` - Builds the app for production
 - `npm test` - Launches the test runner
 - `npm eject` - Ejects from Create React App (one-way operation)
+
+## Git Workflow & Branching
+
+This project follows a structured Git branching strategy for organized development:
+
+### Branch Structure
+- **`master`** - Production-ready code (protected)
+- **`production`** - Production staging and release preparation
+- **`qa`** - Quality assurance testing and validation
+- **`develop`** - Development integration branch (default for new features)
+- **`feature/*`** - Individual feature development branches
+
+### Quick Start for Contributors
+```bash
+# Start new feature
+git checkout develop
+git pull origin develop
+git checkout -b feature/your-feature-name
+
+# Make changes, then push
+git add .
+git commit -m "feat: add your feature description"
+git push origin feature/your-feature-name
+
+# Create Pull Request: feature/your-feature-name → develop
+```
+
+📋 **For detailed workflow guidelines, see [BRANCHING_STRATEGY.md](./BRANCHING_STRATEGY.md)**
 
 ## Project Structure
 
