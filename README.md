@@ -144,14 +144,63 @@ The project uses Tailwind CSS for styling with:
 - Consistent spacing and typography
 - Modern card-based layouts
 
+## Development Workflow
+
+### 🌿 **Branching Strategy**
+We follow a structured Git workflow with the following branches:
+
+- **`master`** - Production-ready code
+- **`production`** - Production staging and release preparation  
+- **`qa`** - Quality assurance testing
+- **`develop`** - Development integration branch
+- **`feature/*`** - Individual feature development
+
+📖 **See [BRANCHING_STRATEGY.md](./BRANCHING_STRATEGY.md) for detailed workflow guidelines.**
+
+### 🚀 **Getting Started with Development**
+
+1. **Clone and setup:**
+   ```bash
+   git clone https://github.com/danharap/PromoPilot.git
+   cd PromoPilot
+   git checkout develop
+   npm install
+   npm start
+   ```
+
+2. **Create a feature branch:**
+   ```bash
+   git checkout -b feature/your-feature-name
+   # Make your changes
+   git commit -m "feat: add your feature"
+   git push origin feature/your-feature-name
+   ```
+
+3. **Create a Pull Request** to merge into `develop`
+
+### 📋 **Code Standards**
+- Follow React best practices and hooks patterns
+- Use Tailwind CSS for styling consistency
+- Write descriptive commit messages
+- Ensure responsive design across devices
+- Add comments for complex logic
+
 ## Contributing
 
-This is a front-end prototype. Future enhancements may include:
+This project welcomes contributions! Please:
+
+1. Read the [branching strategy](./BRANCHING_STRATEGY.md)
+2. Create an issue for bugs or feature requests
+3. Follow the PR template when submitting changes
+4. Ensure all tests pass before submitting
+
+### Future Enhancements
 - Backend API integration
-- Real platform integrations
-- Advanced analytics
+- Real platform integrations (Instagram, TikTok, etc.)
+- Advanced analytics and reporting
 - AI content generation
-- User management system
+- User management and authentication system
+- Team collaboration features
 
 ## License
 
