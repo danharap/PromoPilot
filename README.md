@@ -55,16 +55,39 @@ A React-based front-end application that helps small businesses automate their s
 
 ## Project Structure
 
+The application follows a modular React architecture with clean separation of concerns:
+
 ```
 src/
 ├── components/          # Reusable UI components
-│   ├── ui/             # Basic UI components (Button, Input, Card)
-│   ├── layout/         # Layout components (Header, Sidebar)
-│   └── pages/          # Page components
-├── data/               # Mock data for development
-├── styles/             # CSS and Tailwind configuration
-└── App.js              # Main application component
+│   ├── Button.jsx      # Customizable button component
+│   ├── Card.jsx        # Container card component
+│   └── Input.jsx       # Form input component
+├── layouts/            # Layout wrapper components
+│   ├── Header.jsx      # Top navigation and user menu
+│   ├── Sidebar.jsx     # Side navigation menu
+│   └── MainLayout.jsx  # Main layout wrapper
+├── pages/              # Individual page components
+│   ├── Dashboard.jsx   # Main dashboard view
+│   ├── CreatePost.jsx  # Post creation interface
+│   ├── ScheduledPosts.jsx # Posts management
+│   ├── Campaigns.jsx   # Campaign management
+│   ├── Analytics.jsx   # Performance analytics
+│   ├── Settings.jsx    # User settings
+│   └── SignIn.jsx      # Authentication page
+├── data/               # Mock data and business logic
+│   ├── mockUser.js     # User profile and stats
+│   └── mockPosts.js    # Posts and platform data
+├── styles/             # CSS stylesheets
+│   └── index.css       # Global styles and Tailwind
+└── App.js              # Main application router
 ```
+
+### Architecture Benefits
+- **Modularity**: Each component has a single responsibility
+- **Reusability**: UI components can be used across multiple pages
+- **Maintainability**: Easy to locate and modify specific functionality
+- **Scalability**: Simple to add new features and components
 
 ## Features Overview
 
