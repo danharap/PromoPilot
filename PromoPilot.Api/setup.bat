@@ -1,43 +1,54 @@
 @echo off
-echo Setting up PromoPilot API...
-
 echo.
-echo 1. Creating virtual environment...
-python -m venv venv
-
+echo ===========================================
+echo  PromoPilot API Setup Script
+echo ===========================================
 echo.
-echo 2. Activating virtual environment...
-call venv\Scripts\activate
 
-echo.
-echo 3. Installing dependencies...
-pip install -r requirements.txt
-
-echo.
-echo 4. Starting PostgreSQL with Docker...
+echo [1/5] Starting PostgreSQL database...
 docker-compose up -d postgres
+if %errorlevel% neq 0 (
+    echo ERROR: Failed to start database. Make sure Docker Desktop is running.
+    pause
+    exit /b 1
+)
 
-echo.
-echo 5. Waiting for PostgreSQL to be ready...
-timeout /t 10
+echo [2/5] Creating Python virtual environment...
+python -m venv .venv
+if %errorlevel% neq 0 (
+    echo ERROR: Failed to create virtual environment. Make sure Python 3.12+ is installed.
+    pause
+    exit /b 1
+)
 
-echo.
-echo 6. Setting up environment variables...
-if not exist .env (
-    copy .env.example .env
-    echo Created .env file. Please update the DATABASE_URL if needed.
+echo [3/5] Activating virtual environment...
+call .venv\Scripts\activate.bat
+
+echo [4/5] Installing Python dependencies...
+pip install -r requirements.txt
+if %errorlevel% neq 0 (
+    echo ERROR: Failed to install dependencies.
+    pause
+    exit /b 1
+)
+
+echo [5/5] Running database migrations...
+alembic upgrade head
+if %errorlevel% neq 0 (
+    echo ERROR: Failed to run migrations.
+    pause
+    exit /b 1
 )
 
 echo.
-echo 7. Running database migrations...
-alembic revision --autogenerate -m "Initial migration"
-alembic upgrade head
-
+echo ===========================================
+echo  Setup Complete! 🎉
+echo ===========================================
 echo.
-echo Setup complete! You can now run the API with:
-echo uvicorn main:app --reload
+echo To start the API server, run:
+echo   .venv\Scripts\activate
+echo   uvicorn main:app --reload --host 0.0.0.0 --port 8000
 echo.
-echo API will be available at: http://localhost:8000
-echo Interactive docs at: http://localhost:8000/docs
-
+echo Then visit: http://localhost:8000/docs
+echo.
 pause

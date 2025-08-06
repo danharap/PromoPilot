@@ -10,7 +10,7 @@ load_dotenv()
 # Database URL from environment variable or default for development
 DATABASE_URL = os.getenv(
     "DATABASE_URL", 
-    "sqlite:///./promopilot.db"  # SQLite for easy development
+    "postgresql://postgres:password@localhost:5432/promopilot"  # PostgreSQL for development
 )
 
 # Create SQLAlchemy engine
