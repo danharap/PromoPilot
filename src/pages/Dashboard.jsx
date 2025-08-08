@@ -1,16 +1,21 @@
 import React from 'react';
 import { Instagram, Twitter, MessageSquare, Play, Clock, Check } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 import Card from '../components/Card';
 import Button from '../components/Button';
-import { mockStats, mockUser } from '../data/mockUser';
+import { mockStats } from '../data/mockUser';
 import { mockPosts } from '../data/mockPosts';
 
 const Dashboard = () => {
+  const { user } = useAuth();
+
   return (
     <div className="space-y-6">
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-6 text-white">
-        <h2 className="text-2xl font-bold mb-2">Welcome back, {mockUser.name.split(' ')[0]}! 👋</h2>
-        <p className="text-blue-100">Ready to boost {mockUser.businessName}'s social presence?</p>
+        <h2 className="text-2xl font-bold mb-2">
+          Welcome back, {user?.name ? user.name.split(' ')[0] : 'User'}! 👋
+        </h2>
+        <p className="text-blue-100">Ready to boost your social media presence?</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

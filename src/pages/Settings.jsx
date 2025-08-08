@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Input from '../components/Input';
 
 const Settings = () => {
+  const { user, updateProfile, loading, error } = useAuth();
+  const [userProfile, setUserProfile] = useState({
+    name: '',
+    email: ''
+  });
+
   const [notifications, setNotifications] = useState({
     posts: true,
     engagement: true,
@@ -11,11 +18,37 @@ const Settings = () => {
   });
 
   const [businessProfile, setBusinessProfile] = useState({
-    businessName: 'Bloom Coffee Co.',
-    industry: 'Food & Beverage',
-    website: 'www.bloomcoffee.com',
-    description: 'Artisan coffee roasters focusing on sustainable and ethically sourced beans.'
+    businessName: '',
+    industry: '',
+    website: '',
+    description: ''
   });
+
+  // Initialize user profile data
+  useEffect(() => {
+    if (user) {
+      setUserProfile({
+        name: user.name || '',
+        email: user.email || ''
+      });
+    }
+  }, [user]);
+
+  const handleUserProfileChange = (key, value) => {
+    setUserProfile(prev => ({
+      ...prev,
+      [key]: value
+    }));
+  };
+
+  const handleUserProfileSave = async () => {
+    try {
+      await updateProfile(userProfile);
+      alert('Profile updated successfully!');
+    } catch (error) {
+      alert('Failed to update profile: ' + error.message);
+    }
+  };
 
   const handleNotificationChange = (key) => {
     setNotifications(prev => ({
@@ -24,7 +57,7 @@ const Settings = () => {
     }));
   };
 
-  const handleProfileChange = (key, value) => {
+  const handleBusinessProfileChange = (key, value) => {
     setBusinessProfile(prev => ({
       ...prev,
       [key]: value
@@ -35,23 +68,54 @@ const Settings = () => {
     <div className="max-w-4xl space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">Settings</h2>
 
+      {error && (
+        <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+          {error}
+        </div>
+      )}
+
+      <Card className="p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">User Profile</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input
+            label="Full Name"
+            value={userProfile.name}
+            onChange={(e) => handleUserProfileChange('name', e.target.value)}
+          />
+          <Input
+            label="Email"
+            type="email"
+            value={userProfile.email}
+            onChange={(e) => handleUserProfileChange('email', e.target.value)}
+          />
+        </div>
+        <div className="mt-4">
+          <Button onClick={handleUserProfileSave} disabled={loading}>
+            {loading ? 'Saving...' : 'Save Profile'}
+          </Button>
+        </div>
+      </Card>
+
       <Card className="p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Business Profile</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Input
             label="Business Name"
             value={businessProfile.businessName}
-            onChange={(e) => handleProfileChange('businessName', e.target.value)}
+            onChange={(e) => handleBusinessProfileChange('businessName', e.target.value)}
+            placeholder="Enter your business name"
           />
           <Input
             label="Industry"
             value={businessProfile.industry}
-            onChange={(e) => handleProfileChange('industry', e.target.value)}
+            onChange={(e) => handleBusinessProfileChange('industry', e.target.value)}
+            placeholder="e.g., Food & Beverage"
           />
           <Input
             label="Website"
             value={businessProfile.website}
-            onChange={(e) => handleProfileChange('website', e.target.value)}
+            onChange={(e) => handleBusinessProfileChange('website', e.target.value)}
+            placeholder="www.yourbusiness.com"
             className="md:col-span-2"
           />
           <div className="md:col-span-2">
@@ -60,12 +124,13 @@ const Settings = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               rows="3"
               value={businessProfile.description}
-              onChange={(e) => handleProfileChange('description', e.target.value)}
+              onChange={(e) => handleBusinessProfileChange('description', e.target.value)}
+              placeholder="Tell us about your business..."
             />
           </div>
         </div>
         <div className="mt-4">
-          <Button>Save Changes</Button>
+          <Button>Save Business Profile</Button>
         </div>
       </Card>
 
@@ -73,8 +138,8 @@ const Settings = () => {
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Platform Integrations</h3>
         <div className="space-y-4">
           {[
-            { name: 'Instagram', status: 'connected', color: 'text-green-600' },
-            { name: 'Twitter/X', status: 'connected', color: 'text-green-600' },
+            { name: 'Instagram', status: 'disconnected', color: 'text-red-600' },
+            { name: 'Twitter/X', status: 'disconnected', color: 'text-red-600' },
             { name: 'TikTok', status: 'disconnected', color: 'text-red-600' },
             { name: 'Reddit', status: 'disconnected', color: 'text-red-600' }
           ].map((platform) => (
@@ -88,6 +153,7 @@ const Settings = () => {
               <Button 
                 variant={platform.status === 'connected' ? 'secondary' : 'primary'}
                 size="sm"
+                onClick={() => alert(`${platform.name} integration coming soon!`)}
               >
                 {platform.status === 'connected' ? 'Disconnect' : 'Connect'}
               </Button>

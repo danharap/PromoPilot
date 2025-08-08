@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import MainLayout from './layouts/MainLayout';
 import LandingPage from './pages/LandingPage';
 import LandingNavbar from './components/LandingNavbar';
@@ -12,28 +13,30 @@ import Settings from './pages/Settings';
 import HelpCenter from './pages/HelpCenter';
 import Blog from './pages/Blog';
 import Community from './pages/Community';
-import { mockUser } from './data/mockUser';
 
-function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentPage, setCurrentPage] = useState('landing');  const handleSignIn = () => {
+// Main app component wrapped in auth
+function AppContent() {
+  const [currentPage, setCurrentPage] = useState('landing');
+  const { user, logout, isAuthenticated } = useAuth();
+
+  const handleSignIn = () => {
     console.log('handleSignIn called');
-    setIsAuthenticated(true);
     setCurrentPage('dashboard'); // Navigate to dashboard after successful sign-in
   };
-    const handleSignOut = () => {
-    setIsAuthenticated(false);
+
+  const handleSignOut = () => {
+    logout();
     setCurrentPage('landing'); // Navigate back to landing page after sign out
   };
   
   const handleBackToLanding = () => {
-    setIsAuthenticated(false);
     setCurrentPage('landing'); // Navigate back to landing page while maintaining session
   };
   
   const handleNavigateToSignIn = () => {
     setCurrentPage('signin');
   };
+
   const handleSignUp = () => {
     setCurrentPage('signin');
   };
@@ -44,7 +47,9 @@ function App() {
 
   const handleNavigateToBlog = () => {
     setCurrentPage('blog');
-  };  const handleNavigateToCommunity = () => {
+  };
+
+  const handleNavigateToCommunity = () => {
     setCurrentPage('community');
   };
 
@@ -71,7 +76,9 @@ function App() {
       default:
         return <Dashboard />;
     }
-  };  // Show landing page when not authenticated and on landing page
+  };
+
+  // Show landing page when not authenticated and on landing page
   if (!isAuthenticated && currentPage === 'landing') {
     return (
       <LandingPage 
@@ -83,6 +90,7 @@ function App() {
       />
     );
   }
+
   // Show resource pages even when not authenticated
   if (!isAuthenticated && (currentPage === 'help' || currentPage === 'blog' || currentPage === 'community')) {
     const resourcePages = {
@@ -109,9 +117,11 @@ function App() {
   // Show sign-in page when not authenticated and on signin page
   if (!isAuthenticated) {
     return <SignIn onSignIn={handleSignIn} />;
-  }  return (
+  }
+
+  return (
     <MainLayout 
-      user={mockUser}
+      user={user} // Use real user data from auth context
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
       onSignOut={handleSignOut}
@@ -119,6 +129,15 @@ function App() {
     >
       {renderCurrentPage()}
     </MainLayout>
+  );
+}
+
+// Main App component with AuthProvider
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
