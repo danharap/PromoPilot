@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 
-const MainLayout = ({ children, user, currentPage, setCurrentPage }) => {
+const MainLayout = ({ children, currentPage, setCurrentPage }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -10,7 +10,7 @@ const MainLayout = ({ children, user, currentPage, setCurrentPage }) => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -18,17 +18,17 @@ const MainLayout = ({ children, user, currentPage, setCurrentPage }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header user={user} />
-      
+      <Header />
+
       <div className="flex">
-        <Sidebar 
+        <Sidebar
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           isMobile={isMobile}
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
         />
-        
+
         <main className="flex-1 p-6">
           {children}
         </main>

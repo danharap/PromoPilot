@@ -5,7 +5,7 @@ A React-based front-end application that helps small businesses automate their s
 ## Features
 
 - **Personalized Dashboard**: View post performance metrics and upcoming scheduled posts
-- **Multi-Platform Publishing**: Create and schedule posts across Instagram, TikTok, Reddit, and Twitter/X
+- **Multi-Platform Publishing**: Mastodon is the first live integration; other platforms are planned
 - **Campaign Management**: Organize posts into themed campaigns
 - **Analytics**: Track engagement rates, reach, and conversion metrics
 - **AI-Powered Content**: Get AI suggestions for captions and content ideas
@@ -15,7 +15,7 @@ A React-based front-end application that helps small businesses automate their s
 
 - **React 18** with functional components and hooks
 - **Tailwind CSS** for utility-first styling
-- **React Router** for client-side navigation
+- **Supabase** for authentication and data (see [SETUP.md](SETUP.md))
 - **Lucide React** for beautiful icons
 - **Responsive Design** optimized for desktop and mobile
 
@@ -75,9 +75,10 @@ src/
 │   ├── Analytics.jsx   # Performance analytics
 │   ├── Settings.jsx    # User settings
 │   └── SignIn.jsx      # Authentication page
-├── data/               # Mock data and business logic
-│   ├── mockUser.js     # User profile and stats
-│   └── mockPosts.js    # Posts and platform data
+├── contexts/           # AuthProvider (Supabase session)
+├── hooks/              # usePosts, useSettings
+├── lib/                # Supabase client
+├── services/         # Data access (posts, settings, platforms)
 ├── styles/             # CSS stylesheets
 │   └── index.css       # Global styles and Tailwind
 └── App.js              # Main application router
@@ -92,8 +93,7 @@ src/
 ## Features Overview
 
 ### Authentication
-- Simple sign-in page with form validation
-- Mock authentication for development
+- Supabase email/password sign-in and sign-up ([`src/contexts/AuthContext.js`](src/contexts/AuthContext.js))
 
 ### Dashboard
 - Welcome message with business name
