@@ -130,7 +130,8 @@ const ScheduledPosts = ({ setCurrentPage }) => {
                   const statusCfg = STATUS_CONFIG[post.publish_status] || STATUS_CONFIG.draft;
                   const StatusIcon = statusCfg.Icon;
                   return (
-                    <tr key={post.id} className="border-b border-gray-100">
+                    <React.Fragment key={post.id}>
+                    <tr className="border-b border-gray-100">
                       <td className="py-4 px-4">
                         <div className="flex items-center space-x-2">
                           <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
@@ -185,7 +186,7 @@ const ScheduledPosts = ({ setCurrentPage }) => {
                       </td>
                     </tr>
                     {expanded === post.id && (
-                      <tr key={`${post.id}-expanded`} className="bg-gray-50">
+                      <tr className="bg-gray-50">
                         <td colSpan={5} className="px-4 py-3">
                           <p className="text-sm text-gray-700 whitespace-pre-wrap">{post.content}</p>
                           {post.error_message && (
@@ -194,6 +195,7 @@ const ScheduledPosts = ({ setCurrentPage }) => {
                         </td>
                       </tr>
                     )}
+                    </React.Fragment>
                   );
                 })}
               </tbody>
