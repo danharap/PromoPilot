@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Zap } from 'lucide-react';
+import { Zap, ArrowLeft } from 'lucide-react';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Card from '../components/Card';
 import { useAuth } from '../contexts/AuthContext';
 
-const SignIn = () => {
+const SignIn = ({ onBack }) => {
   const { signIn, signUp } = useAuth();
   const [mode, setMode] = useState('signin'); // 'signin' | 'signup'
   const [email, setEmail] = useState('');
@@ -38,6 +38,16 @@ const SignIn = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      {onBack && (
+        <button
+          type="button"
+          onClick={onBack}
+          className="fixed top-5 left-5 flex items-center space-x-1.5 text-sm text-gray-500 hover:text-gray-800 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back</span>
+        </button>
+      )}
       <Card className="w-full max-w-md p-8">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-600 rounded-xl mb-4">

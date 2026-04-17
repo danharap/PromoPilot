@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import MainLayout from './layouts/MainLayout';
+import Landing from './pages/Landing';
 import SignIn from './pages/SignIn';
 import Dashboard from './pages/Dashboard';
 import CreatePost from './pages/CreatePost';
@@ -12,6 +13,7 @@ import Settings from './pages/Settings';
 function AppShell() {
   const { user, loading } = useAuth();
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [showAuth, setShowAuth] = useState(false);
   const [globalBanner, setGlobalBanner] = useState(null); // { type: 'success'|'error', message }
 
   useEffect(() => {
@@ -44,7 +46,8 @@ function AppShell() {
   }
 
   if (!user) {
-    return <SignIn />;
+    if (showAuth) return <SignIn onBack={() => setShowAuth(false)} />;
+    return <Landing onGetStarted={() => setShowAuth(true)} />;
   }
 
   const renderCurrentPage = () => {
